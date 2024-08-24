@@ -27,6 +27,10 @@ public class Review {
     @Column(nullable = false)
     private String author;
 
+    // no argument constructor
+    public Review() {
+    }
+
     public Review(String content, LocalDateTime createdAt, String author) {
         this.content = content;
         this.createdAt = createdAt;
@@ -61,7 +65,7 @@ public class Review {
         return author;
     }
 
-    public void setUser(String author) {
+    public void setAuthor(String author) {
         this.author = author;
     }
 
