@@ -1,0 +1,30 @@
+version: '3.8'
+# Each service corresponds to it's own container.
+services:
+  backend: # corresponds to springBoot backend
+  # . corresponds to current directory
+    build: .
+    ports:
+      # first is localport. When this port is accessed locally, all requests are forwarded to the container
+      - "8080:8080" 
+    volumes: # for persisting data
+    # this means that all changes done locally will be immediately carried over to the container
+      - .:/backend
+      - ~/.m2:/root/.m2 #copies the maven directory (users/Philippe/.m2) to container
+    environment: # environment variable to be passed to container
+      - SPRING_PROFILES_ACTIVE=dev
+    command: ./mvnw spring-boot:run
+
+  db:
+    image: postgres:13-alpine
+    environment:
+      POSTGRES_USER: philo
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: circus_portfolio_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data # for persisting the database when container is down
+
+volumes:
+  pgdata:
