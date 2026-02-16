@@ -1,2 +1,0 @@
-# Circus Portfolio backend
-
