@@ -22,16 +22,17 @@ if ($method === "POST") {
             exit;
         }
 
-        $comment = [
+        $review = [
             "name" => $data["name"] ?? "Anonymous",
             "project_id" => $data["project_id"] ?? null,
             "message" => $data["message"],
+            "organisation" => $data["organisation"] ?? null,
             "date" => date("d-m-y H:i:s")
         ];
 
         // SQL prepare statement protects against SQL injection attacks
-        $stmt = $db->prepare("INSERT INTO comments (name, project_id, message, date) VALUES (:name, :project_id, :message, :date)");
-        $stmt->execute($comment);
+        $stmt = $db->prepare("INSERT INTO reviews (name, project_id, message, date, organisation) VALUES (:name, :project_id, :message, :date, :organisation)");
+        $stmt->execute($review);
 
 
         echo json_encode(["success" => true, "id" => $db->lastInsertId()]);
@@ -41,7 +42,7 @@ if ($method === "POST") {
     }
 }
 if ($method === "GET") {
-    $stmt = $db->prepare("SELECT * FROM comments ORDER BY date DESC");
+    $stmt = $db->prepare("SELECT * FROM reviews ORDER BY date DESC");
     $stmt->execute();
     // returns associative arrays instead of objects. They are simpler and JSON encode handles them naturally
     echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
