@@ -10,3 +10,10 @@ dependencies = [
     "sqlalchemy>=2.0.48",
     "uvicorn[standard]>=0.41.0",
 ]
+
+[tool.ruff]
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+ignore = ["E501"]
