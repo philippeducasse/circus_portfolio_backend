@@ -14,7 +14,7 @@ class SentimentLabel(TypedDict):
 SentimentResult = list[list[SentimentLabel]]
 
 HF_TOKEN = os.getenv("HF_TOKEN")
-HF_BASE_URL = "https://router.huggingface.co/hf-inference/models/"
+HF_BASE_URL = "https://router.huggingface.co/hf-inference/models"
 
 
 async def get_sentiment(message: str) -> SentimentResult:
@@ -22,7 +22,7 @@ async def get_sentiment(message: str) -> SentimentResult:
     logger.info("Requesting sentiment analysis")
     async with httpx.AsyncClient() as client:
         response = await client.post(
-            HF_BASE_URL + model,
+            f"{HF_BASE_URL}/{model}",
             headers={
                 "Authorization": f"Bearer {HF_TOKEN}",
                 "Content-Type": "application/json",
@@ -43,7 +43,7 @@ async def detect_language(text: str) -> str:
 
     async with httpx.AsyncClient() as client:
         response = await client.post(
-            HF_BASE_URL + model,
+            f"{HF_BASE_URL}/{model}",
             headers={
                 "Authorization": f"Bearer {HF_TOKEN}",
                 "Content-Type": "application/json",
@@ -79,7 +79,7 @@ async def translate(text: str, source_lang: str, target_lang: str) -> str:
 
     async with httpx.AsyncClient() as client:
         response = await client.post(
-            HF_BASE_URL + model,
+            f"{HF_BASE_URL}/{model}",
             headers={
                 "Authorization": f"Bearer {HF_TOKEN}",
                 "Content-Type": "application/json",
