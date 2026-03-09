@@ -57,43 +57,37 @@ async def detect_language(text: str) -> str:
     # return result[0][0]["label"]
 
 
-# async def translate_message(message: str) -> dict:
-#     """Translate message to EN, FR, DE"""
+async def translate_message(message: str) -> dict:
+    """Translate message to EN, FR, DE"""
 
-#     source_lang = await detect_language(message)
+    source_lang = await detect_language(message)
 
-#     translations = {
-#         "original": message,
-#         "source_lang": source_lang,
-#         "en": message
-#         if source_lang == "en"
-#         else await translate(message, source_lang, "en"),
-#         "fr": message
-#         if source_lang == "fr"
-#         else await translate(message, source_lang, "fr"),
-#         "de": message
-#         if source_lang == "de"
-#         else await translate(message, source_lang, "de"),
-#     }
-#     return translations
+    translations = {
+        "original": message,
+        "source_lang": source_lang,
+        "en": message if source_lang == "en" else await translate(message, source_lang, "en"),
+        "fr": message if source_lang == "fr" else await translate(message, source_lang, "fr"),
+        "de": message if source_lang == "de" else await translate(message, source_lang, "de"),
+    }
+    return translations
 
 
-# async def translate(text: str, source_lang: str, target_lang: str) -> str:
-#     """Translate from source to target language"""
+async def translate(text: str, source_lang: str, target_lang: str) -> str:
+    """Translate from source to target language"""
 
-#     model = f"Helsinki-NLP/opus-mt-{source_lang}-{target_lang}"
+    model = f"Helsinki-NLP/opus-mt-{source_lang}-{target_lang}"
 
-#     async with httpx.AsyncClient() as client:
-#         response = await client.post(
-#             HF_BASE_URL + model,
-#             headers={
-#                 "Authorization": f"Bearer {HF_TOKEN}",
-#                 "Content-Type": "application/json",
-#             },
-#             json={"inputs": text},
-#         )
+    async with httpx.AsyncClient() as client:
+        response = await client.post(
+            HF_BASE_URL + model,
+            headers={
+                "Authorization": f"Bearer {HF_TOKEN}",
+                "Content-Type": "application/json",
+            },
+            json={"inputs": text},
+        )
 
-#         result = response.json()
-#         logger.debug(f"Translation result: {result}")
-#         return result
-#     return result[0][0]["translation_text"]
+        result = response.json()
+        logger.debug(f"Translation result: {result}")
+        return result
+    return result[0][0]["translation_text"]
