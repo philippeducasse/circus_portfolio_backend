@@ -22,15 +22,16 @@ client = InferenceClient(
 )
 
 
-async def get_sentiment(message: str) -> int:
-    sentiment = client.text_classification(
-        message, model="finiteautomata/bertweet-base-sentiment-analysis"
-    )
-    print("SENTMENT:", sentiment)
-    positive_message_probability = next(s for s in sentiment if s.label == "POS")
-    print("SENTMENT:", positive_message_probability)
-
-    return positive_message_probability.score
+async def get_sentiment(message: str) -> float:
+    try:
+        sentiment = client.text_classification(
+            message, model="finiteautomata/bertweet-base-sentiment-analysis"
+        )
+        positive_message_probability = next(s for s in sentiment if s.label == "POS")
+        return positive_message_probability.score
+    except Exception as e:
+        logger.error(f"Sentiment analysis failed for message '{message}': {e}")
+        return 0.0
 
 
 async def detect_language(text: str) -> str:
