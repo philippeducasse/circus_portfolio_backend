@@ -1,4 +1,3 @@
-import asyncio
 import logging
 from datetime import datetime
 from typing import Optional
@@ -14,13 +13,13 @@ logger = logging.getLogger(__name__)
 @op
 def translate_op(message: str) -> dict:
     """Translate message to EN, FR, DE"""
-    return asyncio.run(translate_message(message))
+    return translate_message(message)
 
 
 @op
 def sentiment_op(translations: dict) -> float:
     """Get sentiment of English translation"""
-    return asyncio.run(get_sentiment(translations["en"]))
+    return get_sentiment(translations["en"])
 
 
 @op

@@ -22,7 +22,7 @@ client = InferenceClient(
 )
 
 
-async def get_sentiment(message: str) -> float:
+def get_sentiment(message: str) -> float:
     try:
         sentiment = client.text_classification(
             message, model="finiteautomata/bertweet-base-sentiment-analysis"
@@ -34,7 +34,7 @@ async def get_sentiment(message: str) -> float:
         return 0.0
 
 
-async def detect_language(text: str) -> str:
+def detect_language(text: str) -> str:
     detected_language = client.text_classification(
         text, model="papluca/xlm-roberta-base-language-detection"
     )
@@ -42,13 +42,13 @@ async def detect_language(text: str) -> str:
     return detected_language[0]["label"]
 
 
-async def translate_message(message: str) -> dict:
+def translate_message(message: str) -> dict:
     """Translate message to EN, FR, DE"""
 
-    source_lang = await detect_language(message)
+    source_lang = detect_language(message)
 
     if source_lang != "en":
-        english_translation = await translate(message, source_lang, "en")
+        english_translation = translate(message, source_lang, "en")
     else:
         english_translation = message
 
@@ -56,14 +56,14 @@ async def translate_message(message: str) -> dict:
         "original": message,
         "source_lang": source_lang,
         "en": english_translation,
-        "fr": message if source_lang == "fr" else await translate(english_translation, "en", "fr"),
-        "de": message if source_lang == "de" else await translate(english_translation, "en", "de"),
+        "fr": message if source_lang == "fr" else translate(english_translation, "en", "fr"),
+        "de": message if source_lang == "de" else translate(english_translation, "en", "de"),
     }
 
     return translations
 
 
-async def translate(text: str, source_lang: str, target_lang: str) -> str:
+def translate(text: str, source_lang: str, target_lang: str) -> str:
     """Translate from source to target language"""
 
     model = f"Helsinki-NLP/opus-mt-{source_lang}-{target_lang}"
