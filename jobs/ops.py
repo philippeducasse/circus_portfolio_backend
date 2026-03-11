@@ -13,12 +13,14 @@ logger = logging.getLogger(__name__)
 @op
 def translate_op(message: str) -> dict:
     """Translate message to EN, FR, DE"""
+    logger.info("Initiating translations")
     return translate_message(message)
 
 
 @op
 def sentiment_op(translations: dict) -> float:
     """Get sentiment of English translation"""
+    logger.info("Getting sentiment")
     return get_sentiment(translations["en"])
 
 
