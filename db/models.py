@@ -1,4 +1,5 @@
-from sqlalchemy import Column, Integer, Text, Boolean
+from sqlalchemy import Boolean, Column, Integer, Text
+
 from db.database import Base
 
 
@@ -12,5 +13,6 @@ class Review(Base):
     message = Column(Text, nullable=False)
     message_en = Column(Text)
     message_fr = Column(Text)
+    message_de = Column(Text)
     positive_message = Column(Boolean)
     date = Column(Text, nullable=False)

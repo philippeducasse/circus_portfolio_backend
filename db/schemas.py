@@ -1,5 +1,6 @@
-from pydantic import BaseModel
 from typing import Optional
+
+from pydantic import BaseModel
 
 
 class ReviewCreate(BaseModel):
@@ -17,6 +18,7 @@ class ReviewOut(BaseModel):
     message: str
     message_en: Optional[str]
     message_fr: Optional[str]
+    message_de: Optional[str]
     positive_message: Optional[bool]
     date: str
 
