@@ -29,7 +29,13 @@ jobs:
           username: ${{ secrets.OVH_USER }}
           key: ${{ secrets.OVH_KEY }}
           script: |
+            docker network create philocircus_net || true
             docker pull pducasse/philocircus_backend:latest
             docker stop philocircus_backend || true
             docker rm philocircus_backend || true
-            docker run -d -p 8000:8000 --name philocircus_backend -e HF_TOKEN=${{ secrets.HF_TOKEN }} pducasse/philocircus_backend:latest
+            docker run -d \
+              -p 8000:8000 \
+              --network philocircus_net \
+              --name philocircus_backend \
+              -e HF_TOKEN=${{ secrets.HF_TOKEN }} \
+              pducasse/philocircus_backend:latest
