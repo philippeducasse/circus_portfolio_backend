@@ -16,3 +16,4 @@ class Review(Base):
     message_de = Column(Text)
     positive_message = Column(Boolean)
     date = Column(Text, nullable=False)
+    original_message_language = Column(Text)
