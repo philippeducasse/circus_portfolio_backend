@@ -20,6 +20,7 @@ class ReviewOut(BaseModel):
     message_fr: Optional[str]
     message_de: Optional[str]
     positive_message: Optional[bool]
+    original_message_language: Optional[str]
     date: str
 
     class Config:

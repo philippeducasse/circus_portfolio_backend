@@ -43,6 +43,7 @@ def save_review_op(
         message_en=translations["en"],
         message_fr=translations["fr"],
         message_de=translations["de"],
+        original_message_language=translations["source_lang"],
         name=name,
         organisation=organisation,
         project_id=project_id,
