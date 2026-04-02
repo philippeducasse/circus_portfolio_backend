@@ -10,6 +10,7 @@ services:
       - philocircus_net
     environment:
       - HF_TOKEN=${HF_TOKEN}
+      - DATABASE_URL=sqlite:////data/portfolio.db
     volumes:
       - philocircus_db:/data
 
