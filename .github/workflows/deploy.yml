@@ -43,8 +43,8 @@ jobs:
           username: ${{ secrets.OVH_USER }}
           key: ${{ secrets.OVH_KEY }}
           script: |
-            cd /home/deploy/philocircus_backend
-            git pull origin production
+            cd ~/philocircus
             echo "HF_TOKEN=${{ secrets.HF_TOKEN }}" > .env
             docker compose pull
-            docker compose up -d
+            docker compose up -d --pull always
+            docker image prune -f
