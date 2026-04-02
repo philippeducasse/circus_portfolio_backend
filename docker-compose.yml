@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  backend:
+    image: pducasse/philocircus_backend:latest
+    container_name: philocircus_backend
+    ports:
+      - "8000:8000"
+    networks:
+      - philocircus_net
+    environment:
+      - HF_TOKEN=${HF_TOKEN}
+    volumes:
+      - philocircus_db:/data
+
+networks:
+  philocircus_net:
+    driver: bridge
+
+volumes:
+  philocircus_db:

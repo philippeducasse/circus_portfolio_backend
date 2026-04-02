@@ -3,7 +3,7 @@ from sqlalchemy.orm import declarative_base, sessionmaker
 
 # Create SQLalchemy connection to the db
 # FastAPI may check access db from different threads, so this is required
-engine = create_engine("sqlite:///portfolio.db", connect_args={"check_same_thread": False}) 
+engine = create_engine("sqlite:////data/portfolio.db", connect_args={"check_same_thread": False}) 
 # factory for creating database sessions. Each session is one unit of work with the DB -> tracks and flushes changes together
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 # Base call all ORMs inherit from. 
