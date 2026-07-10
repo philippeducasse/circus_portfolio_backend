@@ -1,4 +1,4 @@
-# circus_portfolio_backend
+# circus portfolio backend
 
 FastAPI backend for collecting and retrieving portfolio reviews, with HuggingFace sentiment analysis.
 
